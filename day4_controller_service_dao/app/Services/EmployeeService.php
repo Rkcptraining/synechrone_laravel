@@ -35,4 +35,17 @@ class EmployeeService
     {
         return $this->employeeDAO->deleteEmployee($id);
     }
+    public function loginEmployee(array $data)
+    {
+        // Logic for employee login
+        // This is a placeholder implementation
+        $data = $this->employeeDAO->loginEmployee($data);
+        return $data; // Return the data for now
+    }
+    public function logout()
+    {
+        // Logic for employee logout
+        // This is a placeholder implementation
+        return true; // Return true for now
+    }
 }

@@ -55,4 +55,24 @@ class EmployeeDAO
         }
         return false; // or throw an exception
     }
+    public function loginEmployee(array $data)
+    {
+        // Logic for employee login
+        // This is a placeholder implementation
+        // You can implement actual authentication logic here
+        $employee = Employee::where('email', $data['email'])
+                            ->where('password', $data['password'])
+                            ->first();
+        if ($employee) {
+        return true; // Return true if login is successful
+        } else {
+            return false; // Return false if login fails
+        }
+    }
+    public function logout()
+    {
+        // Logic for employee logout
+        // This is a placeholder implementation
+        return true; // Return true for now
+    }
 }

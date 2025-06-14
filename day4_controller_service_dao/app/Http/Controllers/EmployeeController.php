@@ -46,11 +46,62 @@ class EmployeeController extends Controller
     {
         $data = $request->all();
         $employee = $this->employeeService->updateEmployee($id, $data);
-        return view('getAllEmployees', compact('employee'));
+        $employees = $this->employeeService->getAllEmployees();
+        return view('dashboard', compact('employees'));
+    }
+    public function updateEmployee1(Request $request, $id)
+    {
+        $employee = $this->employeeService->getEmployeeById($id);
+        return view('editEmployee', compact('employee'));
     }
     public function deleteEmployee($id)
     {
         $this->employeeService->deleteEmployee($id);
-        return view('deleteEmployees' , ['message' => 'Employee deleted successfully']);
+        $employees = $this->employeeService->getAllEmployees();
+        return view('dashboard', compact('employees'));
     }
+    public function home()
+    {
+        return view('home');
+    }
+    public function login()
+    {
+        return view('login');
+    }
+    public function loginEmployee(Request $request)
+    {
+        // Logic for handling login
+        // For example, validate credentials and redirect to dashboard
+       $credentials = $this->employeeService->loginEmployee($request->all());
+        //$credentials = $request->only('email', 'password');
+        
+        // Assuming you have a method to authenticate the user
+        if ($credentials) {
+            $employees = $this->employeeService->getAllEmployees();
+            return view('dashboard', compact('employees'));
+        }
+
+        return back()->withErrors(['email' => 'Invalid credentials']);
+    }
+    public function logout()
+    {
+        auth()->logout();
+        return redirect()->route('login');
+    }
+    public function dashboard()
+    {
+        // Logic for displaying the dashboard
+        return view('dashboard');
+    }
+   
+    public function deleteEmployees()
+    {
+        return view('deleteEmployees');
+    }
+    public function viewEmployee($id)
+    {
+        $employee = $this->employeeService->getEmployeeById($id);
+        return view('viewEmployee', compact('employee'));
+    }
+   
 }
